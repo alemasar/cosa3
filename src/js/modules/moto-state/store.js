@@ -3,20 +3,19 @@ import Utils from '../moto-state/utils';
 
 let state = {};
 export let store;
-
+const model = [];
 
 export class Store {
     constructor() { }
 
     initStore() {
         const models = StoreLoader.getModel();
-
+        console.log(models)
         if (!Array.isArray(models)) {
             throw new Error('model should be an object or an Array of objects');
         }
         models.forEach((model) => {
-            console.log(model.model)
-            state[model.type] = { ...model.model };
+            state[model.getType()] = { ...model.getModel() };
         }, this)
     }
 
@@ -31,7 +30,7 @@ document.addEventListener('dispatch-store-created', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.addEventListener('dispatch-model-created', (event) => {
+    document.addEventListener('dispatch-models-created', (event) => {
         console.log('Init store');
         store.initStore();
         console.log(store.getState())

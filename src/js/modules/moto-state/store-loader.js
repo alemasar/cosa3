@@ -6,11 +6,8 @@ const models = [];
 export default class StoreLoader {
     constructor() { }
 
-    static setModel(type, model) {
-        models.push({
-            model: model,
-            type: type
-        });
+    static setModel(model) {
+        models.push(model);
     }
 
     static getModel() {
@@ -28,4 +25,5 @@ export default class StoreLoader {
 console.log('store loader created')
 document.addEventListener('DOMContentLoaded', (event) => {
     Utils.triggerEvent('dispatch-store-created', {});
+    Utils.triggerEvent('dispatch-models-created', {});
 })

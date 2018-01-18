@@ -1,23 +1,31 @@
 import Ajax from './common/ajax';
 //import Actions from './actions';
+import StoreLoader from './modules/moto-state/store-loader';
 import { header } from './models/header.model';
 import { language } from './models/language.model';
 //import * as header from './components/header.component';
-import StoreLoader from './modules/moto-state/store-loader';
+
 
 export default class HeaderModule {
     constructor() {
-//        console.log(header)
+        //        console.log(header)
     }
 }
 
-window.addEventListener('dispatch-model-created', function (e) {
+window.addEventListener('dispatch-store-ready', function (e) {
+    let state = StoreLoader.getState();
     console.log('Init the process');
-    console.log(StoreLoader.getState());
+    //    console.log(state.language)
     //const ml = new ModuleLoader();
     //const cm=new ComponentModel();
     //new Actions();
-    header.browsers = ['hola'];
-    language.languages = ['hola'];
-    console.log(StoreLoader.getState());
+
+    //header.browsers = ['hola'];
+    //    language.data = ['hola'];
+    //state.language.languages = ['adeu'];
+    let l = language.getModel();
+
+    console.log(l.language);
+    l.language = ['Adeu'];
+    console.log(state);
 });
