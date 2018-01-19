@@ -16,7 +16,7 @@ export class Store {
         }
         models.forEach((model) => {
             console.log(model)
-            state[model.type] = model[model.type];
+            state[model.instance] = model[model.instance];
         }, this)
     }
 

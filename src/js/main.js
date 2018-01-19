@@ -1,5 +1,4 @@
 import Ajax from './common/ajax';
-//import Actions from './actions';
 import StoreLoader from './modules/moto-state/store-loader';
 import { header } from './models/header.model';
 import { language } from './models/language.model';
@@ -15,18 +14,14 @@ export default class HeaderModule {
 window.addEventListener('dispatch-store-ready', function (e) {
     let state = StoreLoader.getState();
     console.log('Init the process');
-    //    console.log(state.language)
-    //const ml = new ModuleLoader();
-    //const cm=new ComponentModel();
-    //new Actions();
-
-    //header.browsers = ['hola'];
-    //    language.data = ['hola'];
-    //state.language.languages = ['adeu'];
-    //let l = language.getModel(language);
-
+    //let language1 = language;
+    //let language2 = language;
     console.log(language);
-    language.language = ['Adeu'];
+    /*language1.instance = 'language1';
+    language1.language = ['language1'];
+    language2.instance = 'language2';
+    language2.language = ['Hola'];*/
+    language.language = ["Ha cambiado?"];
     console.log(language);
     console.log(state);
 });

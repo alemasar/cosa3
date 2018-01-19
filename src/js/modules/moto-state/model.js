@@ -7,10 +7,18 @@ function getModelGettersSetters(){
             return obj[prop];
         },
         set: function (obj, prop, value) {
-            console.log(obj)
-            let state = StoreLoader.getState();
-            state[obj.type] = value;
-            obj[prop] = value;
+            console.log(obj);
+            console.log(prop);
+            console.log(value);
+            if (prop==='instance'){
+                let state = StoreLoader.getState();
+                state[value] = obj;
+                obj[prop] = value;
+            }else{
+                let state = StoreLoader.getState();
+                state[obj.instance] = value;
+                obj[prop] = value;
+            }
             return true;
         }
     }
@@ -21,13 +29,17 @@ export class Model {
     }
 
     static getModel(model) {
-        const key = Object.keys(model).filter(key => key !== 'type');
+        const key = Object.keys(model).filter(key => key !== 'instance');
         let obj = {};
         obj[key[0]] = model[key[0]];
-        obj.type = key[0];
+        obj.instance = key[0];
         console.log(obj)
         
         return new Proxy(obj, getModelGettersSetters())
     }
-
+    static setData(name, obj){
+        let data = {};
+        data[name] = obj;
+        return data;
+    }
 }

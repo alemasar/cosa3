@@ -3,9 +3,7 @@ import { modelGettersSetters } from '../modules/moto-state/model';
 import { Model } from '../modules/moto-state/model';
 import Utils from '../modules/moto-state/utils';
 
-export let language = {
-    language: ['Javascript', 'PHP']
-}
+export let language = Model.setData('language', ['Javascript', 'PHP']);
 
 language = Model.getModel(language);
 console.log(language)
