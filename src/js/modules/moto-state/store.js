@@ -15,7 +15,7 @@ export class Store {
             throw new Error('model should be an object or an Array of objects');
         }
         models.forEach((model) => {
-            console.log(model[model.type])
+            console.log(model)
             state[model.type] = model[model.type];
         }, this)
     }

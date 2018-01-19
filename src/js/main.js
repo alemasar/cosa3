@@ -25,7 +25,8 @@ window.addEventListener('dispatch-store-ready', function (e) {
     //state.language.languages = ['adeu'];
     //let l = language.getModel(language);
 
-    //console.log(language.obj);
+    console.log(language);
     language.language = ['Adeu'];
+    console.log(language);
     console.log(state);
 });

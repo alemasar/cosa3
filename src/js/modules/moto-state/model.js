@@ -9,7 +9,7 @@ function getModelGettersSetters(){
         set: function (obj, prop, value) {
             console.log(obj)
             let state = StoreLoader.getState();
-            state[obj.type][prop] = value;
+            state[obj.type] = value;
             obj[prop] = value;
             return true;
         }
@@ -22,15 +22,12 @@ export class Model {
 
     static getModel(model) {
         const key = Object.keys(model).filter(key => key !== 'type');
-        console.log(key)
+        let obj = {};
+        obj[key[0]] = model[key[0]];
+        obj.type = key[0];
+        console.log(obj)
         
-        return new Proxy({
-            type: key[0],
-            model[key[0]]
-        }, getModelGettersSetters())
+        return new Proxy(obj, getModelGettersSetters())
     }
 
-    getType() {
-        return this.constructor.name.toLowerCase();
-    }
 }
