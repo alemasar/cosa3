@@ -23,9 +23,9 @@ window.addEventListener('dispatch-store-ready', function (e) {
     //header.browsers = ['hola'];
     //    language.data = ['hola'];
     //state.language.languages = ['adeu'];
-    let l = language.getModel();
+    //let l = language.getModel(language);
 
-    console.log(l.language);
-    l.language = ['Adeu'];
+    //console.log(language.obj);
+    language.language = ['Adeu'];
     console.log(state);
 });
