@@ -9,6 +9,7 @@ let jsFiles = [];
 let jsFilesNum = 0;
 let properties = ["id", "template", "data", "data_name"];
 
+
 function loadFile(file) {
     var script = document.createElement('script');
     script.onload = function () {
@@ -22,6 +23,28 @@ function loadFile(file) {
     document.head.appendChild(script);
 }
 
+function loadScript(location) {
+    // Check for existing script element and delete it if it exists
+    var js = document.getElementById("sandboxScript");
+    if (js !== null) {
+        document.body.removeChild(js);
+        console.info("---------- Script refreshed ----------");
+    }
+
+    // Create new script element and load a script into it
+    js = document.createElement("script");
+    js.src = location;
+    js.id = "sandboxScript";
+    js.onload = function () {
+        //do stuff with the script
+        console.info("---------- Script loaded ----------");
+        let DOMContentLoaded_event = document.createEvent("Event")
+        DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true)
+        window.document.dispatchEvent(DOMContentLoaded_event)
+    };
+    document.body.appendChild(js);
+}
+
 Twig.extend(function (Twig) {
     Twig.exports.extendFunction("t", (source, params) => {
         return source;
@@ -29,8 +52,12 @@ Twig.extend(function (Twig) {
 
     Twig.exports.extendFunction("add_js", (jsFile) => {
         if (jsFiles.indexOf(jsFile) === -1) {
+            let scripts_div = document.createElement("DIV");
+            scripts_div.setAttribute('data-scripts-src', jsFile);
+            scripts_div.id = 'sandboxScript';
+            document.body.appendChild(scripts_div);
             jsFiles.push(jsFile);
-            loadFile(jsFile)
+            loadScript(jsFile);
         }
     });
 })
@@ -44,12 +71,17 @@ export default class Page {
     }
 
     loadTemplate(tplObj) {
+        console.log(tplObj)
         Ajax.getUrl("http://localhost:3005/" + tplObj.data, {}).subscribe((data) => {
             const loadTpl = function (template) {
                 let objData = {};
                 const pageSlot = this.shadowRoot.querySelector("#pageSlot");
                 objData[tplObj.data_name] = data;
-                console.log(objData);
+
+                const removeElements = Array.from(pageSlot.childNodes);
+                removeElements.forEach((el) => {
+                    el.remove();
+                });
                 const childs = Array.from(new DOMParser().parseFromString(template.render(objData), "text/html").body.childNodes);
                 childs.forEach((child) => {
                     pageSlot.appendChild(child);
@@ -72,8 +104,10 @@ export default class Page {
             .subscribe((route) => {
                 let routes = [];
                 let defaultRoute = {};
+                const url = new URL(window.location.href);
+                const page = url.searchParams.get("page");
                 route.forEach((rs) => {
-                    rs.children.forEach((r) => {
+                    rs.children.forEach((r, index) => {
                         let obj = {}
                         obj.label = r.label;
                         obj.template = r.path + '/' + r.template;
@@ -81,14 +115,26 @@ export default class Page {
                         obj.data = r.data;
                         obj.data_name = r.data_name;
                         obj.data_name = r.data_name;
-                        if (r.default) {
+                        console.log(page)
+                        if (page !== '' && page === obj.id) {
                             obj.default = r.default;
                             defaultRoute = obj;
-                        }                     
+                        }else if (page === ''){
+                            if (r.default) {
+                                obj.default = r.default;
+                                defaultRoute = obj;
+                            } else if (index===0){
+                                console.log(index)
+                                obj.default = r.default;
+                                defaultRoute = obj;
+                            }
+                        }
                         routes.push(obj);
                     });
                 })
+
                 if (defaultRoute) {
+                    console.log(defaultRoute)
                     this.loadTemplate(defaultRoute);
                 }
 
@@ -107,7 +153,9 @@ export default class Page {
                                         tplObj[attr.name.replace("data-route-", "")] = e.target.getAttribute(attr.name);
                                     }
                                 });
-                                this.loadTemplate(tplObj);
+                                // this.loadTemplate(tplObj);
+                                console.log(window.location.origin + '?page="' + tplObj.id + '"')
+                                document.location.href = window.location.origin + '?page=' + tplObj.id;
                             }
                             link.addEventListener("click", clickRef.bind(this))
                         });

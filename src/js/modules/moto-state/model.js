@@ -33,8 +33,7 @@ export class Model {
         let obj = {};
         obj[key[0]] = model[key[0]];
         obj.instance = key[0];
-        console.log(obj)
-        
+        console.log(obj);       
         return new Proxy(obj, getModelGettersSetters())
     }
     static setData(name, obj){

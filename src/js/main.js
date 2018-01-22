@@ -14,14 +14,15 @@ export default class HeaderModule {
 window.addEventListener('dispatch-store-ready', function (e) {
     let state = StoreLoader.getState();
     console.log('Init the process');
-    //let language1 = language;
-    //let language2 = language;
-    console.log(language);
-    /*language1.instance = 'language1';
+    let language1 = language({'language': ['Coffee Script', 'PHP']});
+    let language2 = language({'language': ['Javascript', 'PHP']});
+    console.log(language1);
     language1.language = ['language1'];
-    language2.instance = 'language2';
-    language2.language = ['Hola'];*/
-    language.language = ["Ha cambiado?"];
-    console.log(language);
-    console.log(state);
+    console.log(language1);
+    //language2.instance = 'language2';
+    language2.language = ['Hola'];
+    console.log(language2);
+    //language.language = ["Ha cambiado?"];
+    //console.log(language);
+    //console.log(state);
 });
