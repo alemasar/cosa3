@@ -160,6 +160,12 @@ export default class Page {
                             link.addEventListener("click", clickRef.bind(this))
                         });
                     });
+                    const newlink = document.createElement("link");
+                    newlink.setAttribute("rel", "stylesheet");
+                    newlink.setAttribute("type", "text/css");
+                    newlink.setAttribute("href", "dist/css/header-module.css");
+                    console.log(newlink)
+                    parsedTemplate.appendChild(newlink);
                     slot.appendChild(parsedTemplate);
                     const links = Array.from(slot.querySelectorAll("ul li a"));
                     properties.forEach((prop) => {

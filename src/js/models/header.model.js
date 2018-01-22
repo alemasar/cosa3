@@ -1,4 +1,4 @@
-import StoreLoader from '../modules/moto-state/store-loader';
+/*import StoreLoader from '../modules/moto-state/store-loader';
 import { modelGettersSetters } from '../modules/moto-state/model';
 import { Model } from '../modules/moto-state/model';
 import Utils from '../modules/moto-state/utils';
@@ -14,4 +14,4 @@ document.addEventListener('dispatch-store-created', (event) => {
     console.log(header)
     StoreLoader.setModel(header);
     Utils.triggerEvent('dispatch-model-created', {});
-});
+});*/

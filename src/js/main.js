@@ -1,7 +1,8 @@
 import Ajax from './common/ajax';
 import StoreLoader from './modules/moto-state/store-loader';
-import { header } from './models/header.model';
+import Language from './models/language.model';
 import { language } from './models/language.model';
+import { Model } from './modules/moto-state/model';
 //import * as header from './components/header.component';
 
 
@@ -11,12 +12,15 @@ export default class HeaderModule {
     }
 }
 
-window.addEventListener('dispatch-store-ready', function (e) {
+window.addEventListener('dispatch-store-created', function (e) {
     let state = StoreLoader.getState();
     console.log('Init the process');
-    let language1 = language({'language': ['Coffee Script', 'PHP']});
-    let language2 = language({'language': ['Javascript', 'PHP']});
-    console.log(language1);
+    //let l = language();
+    //l.language = ['Coffee Script', 'PHP'];
+
+    let language1 = language({'language': ['Javascript', 'PHP']});
+    let language2 = language({'language': ['Coffee Script', 'PHP']});
+    console.log(language1 instanceof Language);
     language1.language = ['language1'];
     console.log(language1);
     //language2.instance = 'language2';

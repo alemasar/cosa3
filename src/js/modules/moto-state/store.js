@@ -9,7 +9,7 @@ export class Store {
     constructor() { }
 
     initStore() {
-        const models = StoreLoader.getModel();
+/*        const models = StoreLoader.getModel();
         console.log(models)
         if (!Array.isArray(models)) {
             throw new Error('model should be an object or an Array of objects');
@@ -17,7 +17,7 @@ export class Store {
         models.forEach((model) => {
             console.log(model)
             state[model.instance] = model[model.instance];
-        }, this)
+        }, this);*/
     }
 
     getState() {
@@ -30,11 +30,11 @@ document.addEventListener('dispatch-store-created', (event) => {
     store = new Store();
 });
 
-document.addEventListener('DOMContentLoaded', (event) => {
+/*document.addEventListener('DOMContentLoaded', (event) => {
     document.addEventListener('dispatch-models-created', (event) => {
         console.log('Init store');
         store.initStore();
         console.log(store.getState())
         Utils.triggerEvent('dispatch-store-ready', {});
     });
-});
+});*/

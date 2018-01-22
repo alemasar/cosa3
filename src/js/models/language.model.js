@@ -1,33 +1,24 @@
-import StoreLoader from '../modules/moto-state/store-loader';
-import { modelGettersSetters } from '../modules/moto-state/model';
-import { Model } from '../modules/moto-state/model';
-import Utils from '../modules/moto-state/utils';
+export default class Language {
+    constructor(props) {
+        //this.languages = [];
+        const keys = Object.keys(props);
+        console.log(keys)
 
-
-function lang(language) {
-    console.log(language)
-    this.language = language;
+        keys.forEach((prop) => {
+            console.log(prop)
+            this[prop] = props[prop];
+        });
+    }
 }
 
-const l = new Proxy(lang, {
-    construct: function (target, args) {
-        console.log(args);
-        return new target(...args);
-    }
-});
-
 export let language = function (args) {
-    return new l(args).language;
+ //   const l = new Language();
+    const descomposedArgs = { ...args }
+    console.log(new Language(descomposedArgs))
+    return new Proxy(new Language(descomposedArgs), {
+        getPrototypeOf: function (target) {
+            console.log(target)
+            return Language.prototype;
+        }
+    })
 };
-
-//Model.setData('language', ['Javascript', 'PHP']);
-
-//language = Model.getModel(language);
-console.log(language)
-
-document.addEventListener('dispatch-store-created', (event) => {
-    console.log('Init actions');
-    console.log(language)
-    // StoreLoader.setModel(new language().lang);
-    Utils.triggerEvent('dispatch-model-created', {});
-});
