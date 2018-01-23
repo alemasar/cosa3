@@ -11,7 +11,8 @@
                     "path": "../../../src/tpls",
                     "data": "service1",
                     "data_name": "object1",
-                    "default": true
+                    "default": true,
+                    "css":"dist/css/header-module.css"
                 },
                 {
                     "id":"test",
@@ -19,7 +20,8 @@
                     "template": "another_route.html",
                     "path": "../../../src/tpls",
                     "data": "service1",
-                    "data_name": "object"
+                    "data_name": "object",
+                    "css":"dist/css/header-module.css"
                 }
             ]
         }

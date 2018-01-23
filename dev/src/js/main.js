@@ -66,25 +66,25 @@ export default class Page {
     constructor() {
         this.routeData = [];
         const menuDiv = document.getElementById("workspace_container");
-        this.shadowRoot = menuDiv.attachShadow({ mode: 'open' }).appendChild(menuDiv.cloneNode(true));
+//        this.shadowRoot = menuDiv.attachShadow({ mode: 'open' }).appendChild(menuDiv.cloneNode(true));
         this.loadRoutes()
     }
 
     loadTemplate(tplObj) {
-        console.log(tplObj)
         Ajax.getUrl("http://localhost:3005/" + tplObj.data, {}).subscribe((data) => {
             const loadTpl = function (template) {
                 let objData = {};
-                const pageSlot = this.shadowRoot.querySelector("#pageSlot");
                 objData[tplObj.data_name] = data;
 
-                const removeElements = Array.from(pageSlot.childNodes);
-                removeElements.forEach((el) => {
-                    el.remove();
-                });
+                const newlink = document.createElement("LINK");
+                newlink.setAttribute("rel", "stylesheet");
+                newlink.setAttribute("type", "text/css");
+                newlink.setAttribute("href", tplObj.css);
+                const t = document.createElement("TEMPLATE");
+                document.head.appendChild(newlink);
                 const childs = Array.from(new DOMParser().parseFromString(template.render(objData), "text/html").body.childNodes);
                 childs.forEach((child) => {
-                    pageSlot.appendChild(child);
+                    document.getElementById("page").appendChild(child);
                 });
             }
             let template = Twig.twig({
@@ -113,17 +113,17 @@ export default class Page {
                         obj.template = r.path + '/' + r.template;
                         obj.id = r.id;
                         obj.data = r.data;
+                        obj.css = r.css;
                         obj.data_name = r.data_name;
-                        obj.data_name = r.data_name;
-                        console.log(page)
+
                         if (page !== '' && page === obj.id) {
                             obj.default = r.default;
                             defaultRoute = obj;
-                        }else if (page === ''){
+                        } else if (page === '') {
                             if (r.default) {
                                 obj.default = r.default;
                                 defaultRoute = obj;
-                            } else if (index===0){
+                            } else if (index === 0) {
                                 console.log(index)
                                 obj.default = r.default;
                                 defaultRoute = obj;
@@ -134,7 +134,6 @@ export default class Page {
                 })
 
                 if (defaultRoute) {
-                    console.log(defaultRoute)
                     this.loadTemplate(defaultRoute);
                 }
 
@@ -142,9 +141,8 @@ export default class Page {
 
                 const load = function (template) {
                     const parsedTemplate = new DOMParser().parseFromString(template.render({ "routes": routes }), "text/html").body.firstChild;
-                    const slot = this.shadowRoot.querySelector("#menuSlot");
-                    slot.addEventListener('slotchange', e => {
-                        const links = Array.from(e.target.querySelectorAll("ul li a"));
+                    const linkRef = function () {
+                        const links = Array.from(document.getElementById("menu").querySelectorAll("ul li a"));
                         links.forEach((link) => {
                             const clickRef = function (e) {
                                 let tplObj = {}
@@ -154,20 +152,14 @@ export default class Page {
                                     }
                                 });
                                 // this.loadTemplate(tplObj);
-                                console.log(window.location.origin + '?page="' + tplObj.id + '"')
                                 document.location.href = window.location.origin + '?page=' + tplObj.id;
                             }
                             link.addEventListener("click", clickRef.bind(this))
                         });
-                    });
-                    const newlink = document.createElement("link");
-                    newlink.setAttribute("rel", "stylesheet");
-                    newlink.setAttribute("type", "text/css");
-                    newlink.setAttribute("href", "dist/css/header-module.css");
-                    console.log(newlink)
-                    parsedTemplate.appendChild(newlink);
-                    slot.appendChild(parsedTemplate);
-                    const links = Array.from(slot.querySelectorAll("ul li a"));
+                    }
+                    document.getElementById("menu").appendChild(parsedTemplate);
+                    linkRef();
+                    const links = Array.from(document.getElementById("menu").querySelectorAll("ul li a"));
                     properties.forEach((prop) => {
                         links.forEach((link, index) => {
                             link.setAttribute("data-route-" + prop, routes[index][prop]);
