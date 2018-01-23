@@ -2,6 +2,8 @@ import Ajax from './common/ajax';
 import StoreLoader from './modules/moto-state/store-loader';
 import Language from './models/language.model';
 import { language } from './models/language.model';
+import Header from './models/header.model';
+import { header } from './models/header.model';
 import { Model } from './modules/moto-state/model';
 //import * as header from './components/header.component';
 
@@ -19,11 +21,11 @@ let randomizerMixin = Base => class extends Base {
     randomize() { }
 };
 class Foo { }
-class Bar extends calculatorMixin(randomizerMixin(Foo)) { 
-    constructor(){
+class Bar extends calculatorMixin(randomizerMixin(Foo)) {
+    constructor() {
         super();
     }
-    calc(){
+    calc() {
         console.log(this)
     }
 }
@@ -33,28 +35,35 @@ window.addEventListener('dispatch-store-created', function (e) {
     console.log('Init the process');
     //let l = language();
     //l.language = ['Coffee Script', 'PHP'];
-    let returnName = function (target) {
+   /* let returnName = function (target) {
         console.log(this)
         return this.name;
     }
 
-    let prova = new Bar();
+    let prova = new Bar();*/
     //console.log(prova.calc())
-  //  let language1 = new Language(language1, { 'language': ['Javascript', 'PHP'] });
+    //  let language1 = new Language(language1, { 'language': ['Javascript', 'PHP'] });
 
     //let language1 = function (){}
-        // return language(language1, {'language': ['Javascript', 'PHP']});
-    (function(){
+    // return language(language1, {'language': ['Javascript', 'PHP']});
+    /*(function(){
         let language1 = function (){
             console.log(this)
             return language(language1, {'language': ['Javascript', 'PHP']})
         }
         language1()
-    })()
+    })()*/
     //language1 = language1();
-    //let language1 = language({}, {'language': ['Javascript', 'PHP']})
+    let language1 = language({ 'language': ['Javascript', 'PHP'] });
     //console.log();
-    //console.log(language1.myName)
+    console.log(language1.language)
+    language1.language = ['Coffee Script', 'PHP'];
+    console.log('------------------ Creo Header ------------------')
+    let header1 = header({ 'header': ['Javascript', 'PHP'] });
+    //console.log();
+    console.log(header1)
+    header1.header = ['Coffee Script', 'PHP'];
+    console.log(StoreLoader.getState());
     //let language2 = language({ 'language': ['Coffee Script', 'PHP'] });
     /*let language2 = {};
     language2 = language2.apply(language({ 'language': ['Coffee Script', 'PHP'] }));*/

@@ -14,7 +14,6 @@ function loadFile(file) {
     var script = document.createElement('script');
     script.onload = function () {
         //do stuff with the script
-        console.log("passoo");
         let DOMContentLoaded_event = document.createEvent("Event")
         DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true)
         window.document.dispatchEvent(DOMContentLoaded_event)
@@ -46,8 +45,22 @@ function loadScript(location) {
 }
 
 Twig.extend(function (Twig) {
+    Twig.exports.extendFunction("array", (source, params) => {
+        const a = [];
+        a[source] = params;
+        return a;
+    });
+
     Twig.exports.extendFunction("t", (source, params) => {
-        return source;
+        console.log(params)
+        let result='';
+        if (params){
+            const keys = Object.keys(params);
+            keys.forEach((param)=>{
+                result = source.replace(param, params[param], 'gi');
+            })
+        }
+        return result;
     });
 
     Twig.exports.extendFunction("add_js", (jsFile) => {

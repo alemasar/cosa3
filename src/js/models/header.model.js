@@ -15,3 +15,21 @@ document.addEventListener('dispatch-store-created', (event) => {
     StoreLoader.setModel(header);
     Utils.triggerEvent('dispatch-model-created', {});
 });*/
+
+import { model } from '../modules/moto-state/model';
+
+export default class Header {
+    constructor(args) {
+        console.log(args)
+        const keys = Object.keys(args);
+        keys.forEach((key)=>{
+            this[key]=args[key];
+        });
+        console.log(this);
+    }
+}
+
+export let header = function (args){
+    console.log("------------------entro-----------------")
+    return model(Header, args);
+}

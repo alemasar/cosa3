@@ -5,6 +5,10 @@ const models = [];
 
 export default class StoreLoader {
     constructor() { }
+    static initState(initialState){
+        console.log(store)
+        store.initStore(initialState);
+    }
 
     static setModel(model) {
         models.push(model);

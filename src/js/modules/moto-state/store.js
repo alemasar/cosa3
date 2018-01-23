@@ -8,8 +8,9 @@ const model = [];
 export class Store {
     constructor() { }
 
-    initStore() {
-/*        const models = StoreLoader.getModel();
+    initStore(initialState) {
+        console.log(this.getState())
+        /*        const models = StoreLoader.getModel();
         console.log(models)
         if (!Array.isArray(models)) {
             throw new Error('model should be an object or an Array of objects');
@@ -18,6 +19,12 @@ export class Store {
             console.log(model)
             state[model.instance] = model[model.instance];
         }, this);*/
+
+        state = {
+            ...state,
+            ...initialState
+        }
+
     }
 
     getState() {
@@ -28,6 +35,7 @@ export class Store {
 document.addEventListener('dispatch-store-created', (event) => {
     console.log('Instance of store');
     store = new Store();
+    store.initStore({});
 });
 
 /*document.addEventListener('DOMContentLoaded', (event) => {

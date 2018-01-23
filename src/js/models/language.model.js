@@ -1,30 +1,17 @@
 import { model } from '../modules/moto-state/model';
 
 export default class Language {
-    constructor(instance, args) {
-        //model(Language, args)
-        console.log(this.constructor.name)
+    constructor(args) {
+        console.log(args)
+        const keys = Object.keys(args);
+        keys.forEach((key)=>{
+            this[key]=args[key];
+        })
     }
 }
 
-export let language = function (instance, args){
-    const handler1 = {
-        setPrototypeOf(language, Language) {
-            console.log(language)
-            console.log(Language)
-            Language.name = instance;
-            return true;
-        },
-        defineProperty: function(target, propertyName, descriptor){
-            console.log(target)
-            console.log(propertyName)
-            console.log(descriptor)
-        }
-    };
-    console.log(instance.name)
-    const proxy1 = new Proxy(instance, handler1);
-    //Reflect.setPrototypeOf(proxy1, new Language())
-    return Reflect.setPrototypeOf(proxy1, model(Language,args));
+export let language = function (args){
+    return model(Language, args);
 }
 /*Object.defineProperty( Object.prototype, "__proto__", {
 	get: function() {
