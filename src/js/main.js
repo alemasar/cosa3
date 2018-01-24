@@ -30,8 +30,8 @@ class Bar extends calculatorMixin(randomizerMixin(Foo)) {
     }
 }
 
-window.addEventListener('dispatch-store-created', function (e) {
-    let state = StoreLoader.getState();
+window.addEventListener('DOMContentLoaded', function (e) {
+   // let state = StoreLoader.getState();
     console.log('Init the process');
     //let l = language();
     //l.language = ['Coffee Script', 'PHP'];
@@ -57,13 +57,13 @@ window.addEventListener('dispatch-store-created', function (e) {
     let language1 = language({ 'language': ['Javascript', 'PHP'] });
     //console.log();
     console.log(language1.language)
-    language1.language = ['Coffee Script', 'PHP'];
+    language1.language = ['javascript Script', 'PHP'];
     console.log('------------------ Creo Header ------------------')
     let header1 = header({ 'header': ['Javascript', 'PHP'] });
     //console.log();
     console.log(header1)
     header1.header = ['Coffee Script', 'PHP'];
-    console.log(StoreLoader.getState());
+  //  console.log(StoreLoader.getState());
     //let language2 = language({ 'language': ['Coffee Script', 'PHP'] });
     /*let language2 = {};
     language2 = language2.apply(language({ 'language': ['Coffee Script', 'PHP'] }));*/

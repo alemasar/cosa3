@@ -84,6 +84,7 @@ export default class Page {
     }
 
     loadTemplate(tplObj) {
+        console.log(tplObj)
         Ajax.getUrl("http://localhost:3005/" + tplObj.data, {}).subscribe((data) => {
             const loadTpl = function (template) {
                 let objData = {};
@@ -128,16 +129,14 @@ export default class Page {
                         obj.data = r.data;
                         obj.css = r.css;
                         obj.data_name = r.data_name;
-
                         if (page !== '' && page === obj.id) {
                             obj.default = r.default;
                             defaultRoute = obj;
-                        } else if (page === '') {
+                        } else if (page === '' || page === null) {
                             if (r.default) {
                                 obj.default = r.default;
                                 defaultRoute = obj;
                             } else if (index === 0) {
-                                console.log(index)
                                 obj.default = r.default;
                                 defaultRoute = obj;
                             }

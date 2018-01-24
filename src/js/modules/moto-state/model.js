@@ -5,22 +5,7 @@ export let model = function (model, args) {
     const descomposedArgs = { ...args }
     console.log(new model(descomposedArgs))
 
-    const proxy = new Proxy(new model(descomposedArgs), {
-        setPrototypeOf: function (target, prototype) {
-            console.log(target)
-            console.log(prototype)
-            StoreLoader.setModel(prototype);
-            const keys = Object.keys(prototype);
-            console.log(keys)
-    
-            keys.forEach((prop) => {
-                console.log(prop)
-                target[prop] = prototype[prop];
-            });
-            //target = new Language({...prototype});
-            console.log(target)
-            return new model({...prototype});
-        },
+    const proxy = new Proxy({}, {
         get: function (target, propKey, receiver) {
             if (!(propKey in target)) {
                 throw new ReferenceError('Unknown property: '+propKey);
@@ -32,12 +17,12 @@ export let model = function (model, args) {
             console.log(target);
             console.log(prop);
             console.log(value);
-            const obj = {}
+            const obj = target;
             obj[prop] = value;
             const m = new model({...obj});
-            StoreLoader.initState(m);
-            console.log(StoreLoader.getState());
-            target[prop] = m;
+            StoreLoader.setState(m);
+            //console.log(StoreLoader.getState());
+            //target[prop] = m;
             return true;
         }
 

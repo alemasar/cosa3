@@ -2,12 +2,14 @@ import { Store, store } from './store';
 import Utils from '../moto-state/utils';
 
 const models = [];
+let storeProxy = store({});
+
 
 export default class StoreLoader {
     constructor() { }
-    static initState(initialState){
+    static initState(initialState) {
         console.log(store)
-        store.initStore(initialState);
+        //store.initStore(initialState);
     }
 
     static setModel(model) {
@@ -22,12 +24,19 @@ export default class StoreLoader {
         return store;
     }
 
-    static getState() {
-        return store.getState();
+    static setState(value) {
+        console.log(storeProxy)
+        Reflect.set(storeProxy, '', value);
+        return true;
     }
+
+    /*static initState(value) {
+        // console.log(store(value))
+        storeProxy = store(value);
+    }*/
 }
 console.log('store loader created')
 document.addEventListener('DOMContentLoaded', (event) => {
-    Utils.triggerEvent('dispatch-store-created', {});
+    //Utils.triggerEvent('dispatch-store-created', {});
     Utils.triggerEvent('dispatch-models-created', {});
 })
