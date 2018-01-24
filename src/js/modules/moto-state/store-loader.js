@@ -2,9 +2,11 @@ import { Store, store } from './store';
 import Utils from '../moto-state/utils';
 
 const models = [];
-let storeProxy = store({});
+//let storeProxy = store({});
 
+export let storeModel = function (model, args) {
 
+}
 export default class StoreLoader {
     constructor() { }
     static initState(initialState) {
@@ -25,9 +27,9 @@ export default class StoreLoader {
     }
 
     static setState(value) {
-        console.log(storeProxy)
-        Reflect.set(storeProxy, '', value);
-        return true;
+        console.log(value)
+        //Reflect.set(storeProxy, '', value);
+        return storeProxy;
     }
 
     /*static initState(value) {

@@ -1,12 +1,36 @@
-import StoreLoader from './store-loader';
+//import StoreLoader from './store-loader';
 import Utils from '../moto-state/utils';
 
 let state = [];
-export let store;
 const models = [];
+export let store = new Proxy([],{
+    get: function (target, propKey, receiver) {
+        console.log(target.index);
+        return Reflect.get(target, propKey, receiver);
+    },
+    set: function (target, propKey, value) {
+        console.log(target);
+        const modelName = value.constructor.name;
+        if (!(modelName in state)){
+            models[modelName] = [];
+        }
+
+        if (target.index){
+            target[target.index]=value;
+        }else{
+            const modeloIndex = target.push(value);
+            models[modelName].push(modeloIndex)
+            console.log(modeloIndex);
+            target.index = modeloIndex;
+        }
+        
+        return true;
+    }
+});
+
 
 export class Store {
-    constructor() { 
+    constructor() {
         /*console.log(args)
         const keys = Object.keys(args);
         keys.forEach((key)=>{
@@ -38,18 +62,18 @@ export class Store {
     }*/
 }
 
-store = function (value) {
+//store = function (value) {
     //   const l = new Language();
-    let modelIndex = -1;
-    const proxy = new Proxy(state, {
-        setPrototypeOf: function (target, prototype) {
+    //let modelIndex = -1;
+//    const proxy = new Proxy(value, {
+        /*setPrototypeOf: function (target, prototype) {
             console.log(value.constructor.name)
             console.log(target)
             if (!(value.constructor.name in models)) {
                 models[value.constructor.name] = [];
             }
             
-            /*StoreLoader.setModel(prototype);
+            StoreLoader.setModel(prototype);
             const keys = Object.keys(prototype);
             console.log(keys)
     
@@ -58,55 +82,80 @@ store = function (value) {
                 target[prop] = prototype[prop];
             });
             //target = new Language({...prototype});
-            console.log(target)*/
-            /*const keys = Object.keys(value);
+      //      console.log(target)
+            const keys = Object.keys(value);
    
             keys.forEach((prop) => {
                 console.log(prop)
                 target[prop] = value[prop];
-            });*/
+            });
 
             //console.log(state.push(value));
             console.log('--------- Hago Push ----------------')
             modelIndex = target.push(value);
             models[value.constructor.name].push(modelIndex);
             return true;
-        },
-        get: function (target, propKey, receiver) {
-            console.log(models);
+        },*/
+  //      get: function (target, propKey, receiver) {
+    //        console.log(models);
             /*if (!(propKey in target)) {
                 throw new ReferenceError('Unknown property: '+propKey);
             }*/
-            return Reflect.get(target, propKey, receiver);
+      //      return Reflect.get(target, propKey, receiver);
             //return obj[prop];
-        },
-        set: function (target, prop, value) {
-            console.log(modelIndex);
-            console.log(prop);
-            console.log(value);
-           /* const obj = {}
-            obj[prop] = value;
-            const m = new model({...obj});
-            StoreLoader.initState(m);
-            console.log(StoreLoader.getState());*/
-            console.log('--------- Substituio Valor ----------------')
-            state[modelIndex-1]={...value};
-            console.log(state)
-            return true;
-        }
+      //  },
+//        set: function (target, prop, value) {
+  //          console.log(typeof state);
+    //        console.log(prop);
+      //      console.log(value);
+            /* const obj = {}
+             obj[prop] = value;
+             const m = new model({...obj});
+             StoreLoader.initState(m);
+             console.log(StoreLoader.getState());*/
+        //    console.log('--------- Substituio Valor ----------------');
 
-    });
-    Reflect.setPrototypeOf(proxy, {
-        ...value
-    });
+          //  modelIndex = state.push({ ...value });
+            //if (!(value.constructor.name in models)) {
+                //models[value.constructor.name] = [];
+//            }
+  //          models[value.constructor.name].push(modelIndex);
+    //        console.log(target)
+      //      target.index = modelIndex;
+        //    console.log(target.index)
+            //state[modelIndex-1]={...value};
+            //console.log(state)
+          //  return true;
+        //}
+
+    //});
+  //  console.log(value)
+    
     /*if (modelIndex!=-1){
         console.log('--------------- ENTRO ------------------')
         Reflect.get(proxy, '');
         Reflect.set(proxy, '', value);
     }*/
-    console.log(modelIndex);
-    return proxy;
-};
+ //   console.log(modelIndex);
+  /*  return Reflect.setPrototypeOf(proxy, new Proxy({
+        ...value
+    }, {
+            get: function (target, propKey, receiver) {
+                console.log(target)
+                console.log(propKey)
+                console.log(receiver)
+                return true;
+            },
+            set: function (target, prop, value) {
+                console.log(target);
+                console.log(prop);
+                console.log(value);
+                return true;
+            }
+        }));*/
+  //  Reflect.setPrototypeOf(proxy,state);
+  //  return proxy;
+//};
 /*
 document.addEventListener('dispatch-store-created', (event) => {
     console.log('Instance of store');

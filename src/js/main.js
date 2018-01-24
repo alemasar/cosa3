@@ -1,12 +1,11 @@
 import Ajax from './common/ajax';
-import StoreLoader from './modules/moto-state/store-loader';
 import Language from './models/language.model';
 import { language } from './models/language.model';
 import Header from './models/header.model';
 import { header } from './models/header.model';
 import { Model } from './modules/moto-state/model';
 //import * as header from './components/header.component';
-
+import { Store, store } from './modules/moto-state/store';
 
 export default class HeaderModule {
     constructor() {
@@ -56,13 +55,18 @@ window.addEventListener('DOMContentLoaded', function (e) {
     //language1 = language1();
     let language1 = language({ 'language': ['Javascript', 'PHP'] });
     //console.log();
-    console.log(language1.language)
-    language1.language = ['javascript Script', 'PHP'];
-    console.log('------------------ Creo Header ------------------')
-    let header1 = header({ 'header': ['Javascript', 'PHP'] });
+    console.log(language1)
+    let language2 = language({ 'language': ['Coffee', 'PHP'] });
     //console.log();
-    console.log(header1)
-    header1.header = ['Coffee Script', 'PHP'];
+    console.log(language2.modelo.language)
+    language2.modelo =  {'language': ['javascript Script', 'PHP'] };
+    language1 = ['javascript Script', 'PHP'];
+    console.log(store)
+    //console.log('------------------ Creo Header ------------------')
+    //let header1 = header({ 'header': ['Javascript', 'PHP'] });
+    //console.log();
+   // console.log(header1)
+  //  header1.header = ['Coffee Script', 'PHP'];
   //  console.log(StoreLoader.getState());
     //let language2 = language({ 'language': ['Coffee Script', 'PHP'] });
     /*let language2 = {};
