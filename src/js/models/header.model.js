@@ -1,3 +1,6 @@
+import { model } from '../modules/moto-state/model';
+console.log('------------------ Header Model ---------------------');
+console.log(model)
 /*import StoreLoader from '../modules/moto-state/store-loader';
 import { modelGettersSetters } from '../modules/moto-state/model';
 import { Model } from '../modules/moto-state/model';
@@ -15,10 +18,7 @@ document.addEventListener('dispatch-store-created', (event) => {
     StoreLoader.setModel(header);
     Utils.triggerEvent('dispatch-model-created', {});
 });*/
-
-import { model } from '../modules/moto-state/model';
-
-export default class Header {
+/*export default class Header {
     constructor(args) {
         console.log(args)
         const keys = Object.keys(args);
@@ -27,11 +27,10 @@ export default class Header {
         });
         console.log(this);
     }
-}
+}*/
 
 export let header = function (instance, args){
-    console.log("------------------entro-----------------")
-    let h=new model(Header, instance, args);
-console.log(h);
-    return h;
-}
+    const m = model(instance, values);
+ //console.log(l);
+     return m;
+ }

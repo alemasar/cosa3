@@ -10,7 +10,7 @@ let jsFilesNum = 0;
 let properties = ["id", "template", "data", "data_name"];
 
 
-function loadFile(file) {
+function loadFile(files) {
     var script = document.createElement('script');
     script.onload = function () {
         //do stuff with the script
@@ -22,26 +22,32 @@ function loadFile(file) {
     document.head.appendChild(script);
 }
 
-function loadScript(location) {
+function loadScript(locations) {
     // Check for existing script element and delete it if it exists
-    var js = document.getElementById("sandboxScript");
-    if (js !== null) {
-        document.body.removeChild(js);
-        console.info("---------- Script refreshed ----------");
-    }
+    locations.forEach((location, index)=>{
+        let js = document.getElementById("sandboxScript");
+        if (js !== null) {
+            document.body.removeChild(js);
+            console.info("---------- Script refreshed ----------");
+        }
+        console.log(location)
+        // Create new script element and load a script into it
+        js = document.createElement("script");
+        js.src = location;
+        js.id = "sandboxScript";
+        console.log(index+'   '+locations.length);
+        if (index === 0){
+            js.onload = function () {
+                //do stuff with the script
+                console.info("---------- Script loaded ----------");
+                let DOMContentLoaded_event = document.createEvent("Event")
+                DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true)
+                window.document.dispatchEvent(DOMContentLoaded_event)
+            };
+        }
+        document.body.appendChild(js);
+    })
 
-    // Create new script element and load a script into it
-    js = document.createElement("script");
-    js.src = location;
-    js.id = "sandboxScript";
-    js.onload = function () {
-        //do stuff with the script
-        console.info("---------- Script loaded ----------");
-        let DOMContentLoaded_event = document.createEvent("Event")
-        DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true)
-        window.document.dispatchEvent(DOMContentLoaded_event)
-    };
-    document.body.appendChild(js);
 }
 
 Twig.extend(function (Twig) {
@@ -70,7 +76,6 @@ Twig.extend(function (Twig) {
             scripts_div.id = 'sandboxScript';
             document.body.appendChild(scripts_div);
             jsFiles.push(jsFile);
-            loadScript(jsFile);
         }
     });
 })
@@ -100,6 +105,7 @@ export default class Page {
                 childs.forEach((child) => {
                     document.getElementById("page").appendChild(child);
                 });
+                loadScript(jsFiles);
             }
             let template = Twig.twig({
                 id: tplObj.id,

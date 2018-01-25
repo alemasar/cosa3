@@ -1,10 +1,11 @@
 import Ajax from './common/ajax';
+//import Language from './models/language.model';
 import { language } from './models/language.model';
+//import Header from './models/header.model';
 import { header } from './models/header.model';
 
 
-
-export default class HeaderModule {
+/*export default class HeaderModule {
     constructor() {
         //        console.log(header)
     }
@@ -24,11 +25,11 @@ class Bar extends calculatorMixin(randomizerMixin(Foo)) {
     calc() {
         console.log(this)
     }
-}
+}*/
 
 window.addEventListener('DOMContentLoaded', function (e) {
    // let state = StoreLoader.getState();
-    console.log('Init the process');
+    console.log('Init the process in prova.js');
     //let l = language();
     //l.language = ['Coffee Script', 'PHP'];
    /* let returnName = function (target) {
@@ -50,16 +51,16 @@ window.addEventListener('DOMContentLoaded', function (e) {
         language1()
     })()*/
     //language1 = language1();
-    let language1 = language('language', { 'language': ['Javascript', 'PHP'] });
+    let language1 = language('language');
     //console.log();
-   // console.log(language1)
-    let language2 = language('language', { 'language': ['Coffee', 'PHP'] });
-    let language3 = language('language1', { 'language': ['Coffee', 'PHP'] });
+    console.log(language1)
+    let language2 = language('language', { 'language': ['Coffee desde prova.js', 'PHP'] });
+    let language3 = language('language1', { 'language': ['Coffee desde prova.js', 'PHP'] });
     //console.log();
     //console.log(language3)
-    language1.language = ['Coffee script', 'PHP'];
-    language3.language = ['Javascript', 'PHP'];
-    console.log(language('language'))
+   // language1.language = ['Coffee script desde prova.js', 'PHP'];
+  //  language3.language = ['Javascript desde prova.js', 'PHP'];
+    console.log(language2)
     console.log(language3)
     //console.log('------------------ Creo Header ------------------')
     //let header1 = header({ 'header': ['Javascript', 'PHP'] });
