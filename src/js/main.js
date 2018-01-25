@@ -3,9 +3,7 @@ import Language from './models/language.model';
 import { language } from './models/language.model';
 import Header from './models/header.model';
 import { header } from './models/header.model';
-import { Model } from './modules/moto-state/model';
-//import * as header from './components/header.component';
-import { Store, store } from './modules/moto-state/store';
+
 
 export default class HeaderModule {
     constructor() {
@@ -53,15 +51,15 @@ window.addEventListener('DOMContentLoaded', function (e) {
         language1()
     })()*/
     //language1 = language1();
-    let language1 = language({ 'language': ['Javascript', 'PHP'] });
+    let language1 = language('language', { 'language': ['Javascript', 'PHP'] });
     //console.log();
-    console.log(language1)
-    let language2 = language({ 'language': ['Coffee', 'PHP'] });
+   // console.log(language1)
+    let language2 = language('language', { 'language': ['Coffee', 'PHP'] });
+    let language3 = language('language1', { 'language': ['Coffee', 'PHP'] });
     //console.log();
-    console.log(language2.modelo.language)
-    language2.modelo =  {'language': ['javascript Script', 'PHP'] };
-    language1 = ['javascript Script', 'PHP'];
-    console.log(store)
+    //console.log(language3)
+    language1.language = ['Coffee', 'PHP'];
+    //console.log(store)
     //console.log('------------------ Creo Header ------------------')
     //let header1 = header({ 'header': ['Javascript', 'PHP'] });
     //console.log();

@@ -29,7 +29,9 @@ export default class Header {
     }
 }
 
-export let header = function (args){
+export let header = function (instance, args){
     console.log("------------------entro-----------------")
-    return model(Header, args);
+    let h=new model(Header, instance, args);
+console.log(h);
+    return h;
 }

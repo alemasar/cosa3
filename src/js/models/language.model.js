@@ -1,17 +1,20 @@
 import { model } from '../modules/moto-state/model';
 
 export default class Language {
-    constructor(args) {
-        console.log(args)
+    constructor(instance, args) {
+        //console.log(args)
         const keys = Object.keys(args);
         keys.forEach((key)=>{
             this[key]=args[key];
-        })
+        });
+        //this.instance = instance;
     }
 }
 
-export let language = function (args){
-    return model(Language, args);
+export let language = function (instance, args){
+    let l=new model(Language, instance, args);
+//console.log(l);
+    return l;
 }
 /*Object.defineProperty( Object.prototype, "__proto__", {
 	get: function() {

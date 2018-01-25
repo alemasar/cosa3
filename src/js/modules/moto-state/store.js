@@ -3,31 +3,40 @@ import Utils from '../moto-state/utils';
 
 let state = [];
 const models = [];
-export let store = new Proxy([],{
-    get: function (target, propKey, receiver) {
-        console.log(target.index);
-        return Reflect.get(target, propKey, receiver);
-    },
-    set: function (target, propKey, value) {
-        console.log(target);
-        const modelName = value.constructor.name;
-        if (!(modelName in state)){
-            models[modelName] = [];
-        }
+export let store = function (instance) {
+    const proxy = new Proxy([], {
+        setPrototypeOf: function (target, prototype, instance){
+            console.log(instance);
+            //target[instance]=
+            return true;
+        },
+        get: function (target, propKey, receiver) {
+            console.log(target.instance);
+            return Reflect.get(target, propKey, receiver);
+        },
+        set: function (target, propKey, value) {
+            console.log(target);
+  /*          const modelName = value.constructor.name;
+            if (!(modelName in state)) {
+                models[modelName] = [];
+            }
+*/
+            //if (target[target.instance]){
+            target[target.instance] = value;
+            /* }else{
+                 const modeloIndex = target.push(value);
+                 models[modelName].push(modeloIndex)
+                 console.log(modeloIndex);
+                 target.index = modeloIndex;
+             }*/
 
-        if (target.index){
-            target[target.index]=value;
-        }else{
-            const modeloIndex = target.push(value);
-            models[modelName].push(modeloIndex)
-            console.log(modeloIndex);
-            target.index = modeloIndex;
+            return true;
         }
-        
-        return true;
-    }
-});
-
+    });
+    Reflect.setPrototypeOf(proxy, [], instance);
+    console.log(state)
+    return proxy;
+}
 
 export class Store {
     constructor() {
@@ -130,7 +139,7 @@ export class Store {
 
     //});
   //  console.log(value)
-    
+
     /*if (modelIndex!=-1){
         console.log('--------------- ENTRO ------------------')
         Reflect.get(proxy, '');
