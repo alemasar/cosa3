@@ -1,4 +1,4 @@
-import { store } from './store';
+import { store, addModule } from './store';
 import Utils from '../moto-state/utils';
 
 //let state = state;
@@ -30,7 +30,9 @@ const handler1 = {
 */
 //state['hola'] = "hola";
 console.log(store)
-
+export const setModule = function (id, module){
+    addModule(id, module);
+}
 export let model = function (instance, values) {
    // console.log('------------------ Valor de instancia: '+instance+' --------------------------');
     let v = {...values};

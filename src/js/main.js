@@ -1,8 +1,9 @@
 import Ajax from './common/ajax';
+import { addModule } from './modules/moto-state/module';
 import { language } from './models/language.model';
 import { header } from './models/header.model';
 
-
+console.log('------------ MAIN ---------------')
 
 export default class HeaderModule {
     constructor() {
@@ -26,65 +27,18 @@ class Bar extends calculatorMixin(randomizerMixin(Foo)) {
     }
 }
 
-window.addEventListener('DOMContentLoaded', function (e) {
-   // let state = StoreLoader.getState();
-    console.log('Init the process');
-    //let l = language();
-    //l.language = ['Coffee Script', 'PHP'];
-   /* let returnName = function (target) {
-        console.log(this)
-        return this.name;
-    }
-
-    let prova = new Bar();*/
-    //console.log(prova.calc())
-    //  let language1 = new Language(language1, { 'language': ['Javascript', 'PHP'] });
-
-    //let language1 = function (){}
-    // return language(language1, {'language': ['Javascript', 'PHP']});
-    /*(function(){
-        let language1 = function (){
-            console.log(this)
-            return language(language1, {'language': ['Javascript', 'PHP']})
-        }
-        language1()
-    })()*/
-    //language1 = language1();
-    let language1 = language('language', { 'language': ['Javascript', 'PHP'] });
-    //console.log();
-   // console.log(language1)
-    let language2 = language('language', { 'language': ['Coffee', 'PHP'] });
-    let language3 = language('language1', { 'language': ['Coffee', 'PHP'] });
-    //console.log();
-    //console.log(language3)
-    language1.language = ['Coffee script', 'PHP'];
-    language3.language = ['Javascript', 'PHP'];
+document.addEventListener('header-created', function (e) {
+    console.log('Init the process from main.js');
+    let language1 = language('language', { 'language': ['Javascript in main.js', 'PHP'] });
+    let language2 = language('language', { 'language': ['Coffee in main.js', 'PHP'] });
+    let language3 = language('language1', { 'language': ['Coffee in main.js', 'PHP'] });
+    language1.language = ['Coffee script in main.js', 'PHP'];
+    language3.language = ['Javascript in main.js', 'PHP'];
     console.log(language('language'))
     console.log(language3)
-    //console.log('------------------ Creo Header ------------------')
-    //let header1 = header({ 'header': ['Javascript', 'PHP'] });
-    //console.log();
-   // console.log(header1)
-  //  header1.header = ['Coffee Script', 'PHP'];
-  //  console.log(StoreLoader.getState());
-    //let language2 = language({ 'language': ['Coffee Script', 'PHP'] });
-    /*let language2 = {};
-    language2 = language2.apply(language({ 'language': ['Coffee Script', 'PHP'] }));*/
+});
 
-    /*for (const prop in language2) {
-        if (language2.hasOwnProperty(prop)) {
-            console.log(prop)
-        }
-    }
-
-
-    console.log(language1 instanceof Language);
-    language1.language = ['language1'];
-    console.log(language1);
-    //language2.instance = 'language2';
-    language2.language = ['Hola'];
-    console.log(language2);
-    //language.language = ["Ha cambiado?"];
-    //console.log(language);
-    //console.log(state);*/
+document.addEventListener('DOMContentLoaded', function (e) {
+    console.log('------------------------ Header -------------------------')
+    addModule('header', new HeaderModule());
 });

@@ -1,4 +1,4 @@
-import { model } from '../modules/moto-state/model';
+import { model, setModule } from '../modules/moto-state/model';
 import Utils from '../modules/moto-state/utils';
 console.log('------------------ Language Model ---------------------');
 export default class Language {
