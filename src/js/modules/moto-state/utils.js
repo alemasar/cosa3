@@ -49,5 +49,17 @@ export default class Utils {
         document.dispatchEvent(event);
         return modal;
     }
-
+    static getProxy(persistFunc){
+        let t = [];
+        const mh = {
+            get: function (dummyTarget, trapName) {
+                console.log(dummyTarget);
+                persistFunc();
+                return Reflect[trapName];
+            }
+        }
+        const dummy = {};
+        const bh = new Proxy(dummy, mh);
+        return new Proxy(t, bh);
+    }
 }
