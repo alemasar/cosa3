@@ -49,12 +49,12 @@ export default class Utils {
         document.dispatchEvent(event);
         return modal;
     }
-    static getProxy(persistFunc){
-        let t = [];
+    static getProxy(obj, persistFunc){
+        const t = obj;
         const mh = {
             get: function (dummyTarget, trapName) {
                 console.log(dummyTarget);
-                persistFunc();
+                persistFunc(trapName);
                 return Reflect[trapName];
             }
         }

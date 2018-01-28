@@ -15,12 +15,13 @@ export default class Language {
 export let language = function (instance, values) {
     let state;
 
-    const func = function () {
+    const func = function (e) {
         console.log(this)
-        state = this;
+        console.log(this.target)
+        this.target = this;
         console.log(state);
     }
-    Utils.triggerEvent('get-state', { action: func });
+    Utils.triggerEvent('get-element', { action: func, target: state });
     console.log(state)
     let m = {};
     if (!state[instance]) {
