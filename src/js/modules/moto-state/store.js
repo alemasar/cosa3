@@ -1,27 +1,28 @@
 import Utils from '../moto-state/utils';
 
 
-const setState = function () {
+const setState = function (trapName) {
     let state;
-   const funcGet = function (e){
-       state = this;
-   }
-   Utils.triggerEvent('get-state', { action: funcGet });
+    const funcGet = function (e) {
+        console.log(this.target)
+        this.target = this;
+    }
+    Utils.triggerEvent('get-element', { action: funcGet, target: state });
 
-   const func = function () {
-       store = state;
-       console.log(store);
-   }
-   Utils.triggerEvent('get-state', { action: func });
+    const func = function (e) {
+        this.target = this.values;
+        console.log(store);
+    }
+    Utils.triggerEvent('get-element', { action: func, target: store, values: state });
 }
 
-export let store = Utils.getProxy(setState);
+export let store = Utils.getProxy(new Map(), setState);
 
 const getObjHandler = function (e) {
     //    console.log(store)
-    e.detail.action.call(this);
+    e.detail.action.call(e.detail);
 }
-document.addEventListener('get-state', getObjHandler.bind(store));
+document.addEventListener('get-element', getObjHandler.bind(store));
 
 window.addEventListener('DOMContentLoaded', (event) => {
     let state;

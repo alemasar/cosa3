@@ -55,7 +55,7 @@ export default class Utils {
         const mh = {
             get: function (dummyTarget, trapName) {
                 console.log(dummyTarget);
-                persistFunc();
+                persistFunc(trapName);
                 return Reflect[trapName];
             }
         }
