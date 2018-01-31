@@ -49,6 +49,7 @@ export default class Utils {
         document.dispatchEvent(event);
         return modal;
     }
+
     static getProxy(persistFunc){
         let t = [];
         const mh = {
